@@ -35,7 +35,7 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'user-manager-api'
+      - 'stefanini-users-service'
       - '--image'
       - 'gcr.io/$PROJECT_ID/user-manager-api:$COMMIT_SHA'
       - '--region'
