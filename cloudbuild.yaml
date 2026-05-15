@@ -13,6 +13,8 @@ steps:
     id: 'Ejecutar-Pytest'
     args:
       - 'run'
+      - '-e'
+      - 'DATABASE_URL=sqlite+aiosqlite:///:memory:'
       - 'gcr.io/$PROJECT_ID/user-manager-api:$COMMIT_SHA'
       - 'python'
       - '-m'
