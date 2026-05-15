@@ -1,5 +1,5 @@
 steps:
-  # 1. Construir la imagen
+  # 0. Construir la imagen
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Construir-Imagen'
     args: 
@@ -8,7 +8,7 @@ steps:
       - 'gcr.io/$PROJECT_ID/user-manager-api:$COMMIT_SHA'
       - '.'
 
-  # 2. EJECUTAR PRUEBAS 
+  # 1. EJECUTAR PRUEBAS 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Ejecutar-Pytest'
     args:
@@ -21,20 +21,23 @@ steps:
       - 'pytest'
       - '-v'
 
-  # 3. Subir la imagen al registro
+  # 2. Subir la imagen al registro
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Subir-Imagen'
     args: 
       - 'push'
       - 'gcr.io/$PROJECT_ID/user-manager-api:$COMMIT_SHA'
 
-  # 4. Desplegar en Cloud Run
+  # 3. Desplegar en Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'Desplegar-Cloud-Run'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
+      - '--max-instances=1'
+      - '--min-instances=0'
+      - '--memory=512Mi'
       - 'stefanini-users-service'
       - '--image'
       - 'gcr.io/$PROJECT_ID/user-manager-api:$COMMIT_SHA'
