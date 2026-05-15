@@ -62,7 +62,7 @@ async def create_user(db: AsyncSession, user: schemas.UserCreate):
 async def update_user(db: AsyncSession, user_id: str, user_update: schemas.UserUpdate):
     """
     Actualiza parcialmente un usuario existente.
-    Usa 'exclude_unset' para modificar solo los campos enviados en el payload.
+    Usa 'exclude_unset' para modificar solo los campos enviados en el payload.//prueba de comentario
     """
     db_user = await get_user_by_id(db, user_id)
     if not db_user:
